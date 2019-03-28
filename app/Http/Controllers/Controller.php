@@ -3,23 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Event;
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Routing\Controller as BaseController;
 
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-    public function home()
-    {
-        return view('frontpage');
-    }
 
     public function homeContent()
     {
         $events = Event::get();
-        return view('frontpage', compact('events'));
+        $now = Event::latest()->first();
+        return view('frontpage', compact('events', 'now'));
     }
 
     public function Contact()

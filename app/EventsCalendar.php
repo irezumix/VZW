@@ -2,14 +2,16 @@
 
 namespace App;
 
-use App\Band;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 
-class Event extends Model
+class EventsCalendar extends Model
 {
-    public function bands()
+
+
+
+    public function user()
     {
-        return $this->hasMany('App\Band');
+        return $this->hasMany('App\Users');
     }
 }

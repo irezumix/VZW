@@ -20,22 +20,24 @@ class EventsController extends Controller
 
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'inkomend' => 'required|numeric',
-        //     'factuurnummer' => 'required|numeric',
-        //     'datum' => 'required',
-        //     'vervaldatum' => 'required',
-        //     'bedrag_excl' => 'required|numeric',
-        //     'btw' => 'required|numeric',
-        //     'betaald' => 'required|numeric'
-        // ]);
+        $request->validate([
+            'titel' => 'required',
+            'datum' => 'required|after:today',
+            'prijs' => 'required|integer',
+            'tickets' => 'required',
+            'genre' => 'required',
+            'description' => 'required',
+            'file' => 'required',
+        ]);
         $new_event = new Event;
         $new_event->titel = $request->titel;
         $new_event->datum = $request->datum;
+        $new_event->time = $request->time;
         $new_event->prijs = $request->prijs;
         $new_event->tickets = $request->tickets;
         $new_event->genre = $request->genre;
         $new_event->description = $request->description;
+        $new_event->file = $request->file;
         $new_event->save();
         return redirect()->route('events');
     }
@@ -46,7 +48,6 @@ class EventsController extends Controller
         return view('events.detail', compact('events_details'));
     }
 
-
     public function edit($id)
     {
         $event = Event::find($id);
@@ -55,16 +56,15 @@ class EventsController extends Controller
 
     public function update(Request $request, $id)
     {
-        // $request->validate([
-        //     'inkomend' => 'required|numeric',
-        //     'factuurnummer' => 'required|numeric',
-        //     'datum' => 'date',
-        //     'vervaldatum' => 'date',
-        //     'bedrag_excl' => 'required|numeric',
-        //     'btw' => 'required|numeric',
-        //     'betaald' => 'required|numeric'
-        // ]);
-        // formulier data seven in databank
+        $request->validate([
+            'titel' => 'required',
+            'datum' => 'required|after:today',
+            'prijs' => 'required|integer',
+            'tickets' => 'required',
+            'genre' => 'required',
+            'description' => 'required',
+        ]);
+
         $new_event = Event::find($id);
         $new_event->titel = $request->titel;
         $new_event->datum = $request->datum;
